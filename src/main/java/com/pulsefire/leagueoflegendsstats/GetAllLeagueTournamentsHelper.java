@@ -1,4 +1,4 @@
-package com.mlveda.leagueoflegendsstats;
+package com.pulsefire.leagueoflegendsstats;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

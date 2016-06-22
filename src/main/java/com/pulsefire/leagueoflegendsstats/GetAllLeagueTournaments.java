@@ -1,4 +1,4 @@
-package com.mlveda.leagueoflegendsstats;
+package com.pulsefire.leagueoflegendsstats;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONObject;
 
 /**
  *
@@ -27,8 +28,15 @@ public class GetAllLeagueTournaments extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           GetAllLeagueTournamentsHelper objGetAllLeagueTournamentsHelper=new GetAllLeagueTournamentsHelper();
-           out.print(objGetAllLeagueTournamentsHelper.getAllTournamentJSON());
+        //   GetAllLeagueTournamentsHelper objGetAllLeagueTournamentsHelper=new GetAllLeagueTournamentsHelper();
+        //   out.print(objGetAllLeagueTournamentsHelper.getAllTournamentJSON());
+          League[] objarr=new League[2];
+          objarr[0]=new League("slug", "IN-LCS", "IN", "none", "23-06-2016", "22-06-2016", new JSONObject(), new JSONObject());
+          objarr[1]=new League("slug", "IN-LCS2", "IN2", "none", "23-06-2016", "22-06-2016", new JSONObject(), new JSONObject());
+          
+          
+          LeagueDBOperations objd=new LeagueDBOperations();
+          objd.insertLeagueRecord(objarr);
         }
     }
 

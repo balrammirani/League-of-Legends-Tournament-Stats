@@ -1,4 +1,4 @@
-package com.mlveda.leagueoflegendsstats;
+package com.pulsefire.leagueoflegendsstats;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
