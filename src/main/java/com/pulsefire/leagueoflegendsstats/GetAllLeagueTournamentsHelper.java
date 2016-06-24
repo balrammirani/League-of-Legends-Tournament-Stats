@@ -8,24 +8,29 @@ import org.json.JSONObject;
  * @author Balram
  */
 public class GetAllLeagueTournamentsHelper {
-    
-    public String[] getAllTournamentJSON() {
-        String url = "http://api.lolesports.com/api/v1/leagues";
+
+    public League[] getAllTournamentJSON() {
+        String url = "http://api.lolesports.com/api/v1/navItems";
         HTTPCall objHTTPCall = new HTTPCall();
         String content = objHTTPCall.HTTPGetCall(url);
         JSONObject lolJSON = new JSONObject(content);
         JSONArray tournamentData = lolJSON.getJSONArray("leagues");
-        String[] tournamentName = new String[tournamentData.length()];
-        League[] objLeague = null;
+        //String[] tournamentName = new String[tournamentData.length()];
+        League[] objLeague = new League[tournamentData.length()];
         for (int i = 0; i < tournamentData.length(); i++) {
             JSONObject objData = tournamentData.getJSONObject(i);
-            objLeague[i]=new League(objData.getString("slug"), objData.getString("name"), objData.getString("region"), objData.getString("logoUrl"), objData.getString("createdAt"), objData.getString("updatedAt"), objData.getJSONObject("abouts"), objData.getJSONObject("names"));
-        //JSONObject aboutTournament = objData.getJSONObject("abouts");
+            try {
+                objLeague[i] = new League(objData.getString("slug"), objData.getString("name"), String.valueOf(objData.get("region")), String.valueOf(objData.get("logoUrl")), objData.getString("createdAt"), objData.getString("updatedAt"), objData.getJSONObject("abouts"), objData.getJSONObject("names"));
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+//     objarr[0]=new League("slug", "IN-LCS1", "IN", "none", "23-06-2016", "24-06-2016", new JSONObject(), new JSONObject());
+            //JSONObject aboutTournament = objData.getJSONObject("abouts");
             //if (aboutTournament.has("en_US")) {
-                tournamentName[i] = objData.getString("name");
+            //tournamentName[i] = objData.getString("name");
             //}
         }
-        
-        return tournamentName;
+
+        return objLeague;
     }
 }
