@@ -12,34 +12,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Balram
  */
-@WebServlet(name = "GetAllLeagueTournaments", urlPatterns = {"/GetAllLeagueTournaments"})
-public class GetAllLeagueTournaments extends HttpServlet {
+@WebServlet(name = "LeagueList", urlPatterns = {"/LeagueList"})
+public class LeagueList extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           GetAllLeagueTournamentsHelper objGetAllLeagueTournamentsHelper=new GetAllLeagueTournamentsHelper();
-          LeagueDBOperations objd=new LeagueDBOperations();
-          out.print(objd.insertLeagueRecord(objGetAllLeagueTournamentsHelper.getAllTournamentJSON()));
-
-           //out.print(objGetAllLeagueTournamentsHelper.getAllTournamentJSON());
-  //        League[] objarr=new League[2];
-
-//          objarr[0]=new League("slug", "IN-LCS1", "IN", "none", "23-06-2016", "24-06-2016", new JSONObject(), new JSONObject());
-//          objarr[1]=new League("slug", "IN-LCS2", "IN2", "none", "23-06-2016", "24-06-2016", new JSONObject(), new JSONObject());
-          
-          
-//          LeagueDBOperations objd=new LeagueDBOperations();
-//          objd.insertLeagueRecord(objarr);
+            LeagueDBOperations obj=new LeagueDBOperations();
+            obj.getLeagueName();
         }
     }
 

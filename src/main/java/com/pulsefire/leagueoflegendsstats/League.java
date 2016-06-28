@@ -3,7 +3,10 @@
  */
 package com.pulsefire.leagueoflegendsstats;
 
+import java.util.Date;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.mongodb.morphia.annotations.Entity;
@@ -17,10 +20,12 @@ import org.mongodb.morphia.annotations.Indexes;
  * @author Balram
  */
 @Data
-@Entity
+@Entity(noClassnameStored = true)
 @Indexes(
-    @Index(fields = @Field("name"))
+        @Index(fields = @Field("name"))
 )
+@RequiredArgsConstructor 
+@AllArgsConstructor
 public class League {
 
     @Id
@@ -29,8 +34,8 @@ public class League {
     private final String name;
     private final String region;
     private final String logoUrl;
-    private final String createdAt;
-    private final String updatedAt;
+    private final Date createdAt;
+    private final Date updatedAt;
     private final JSONObject abouts;
     private final JSONObject names;
 }
