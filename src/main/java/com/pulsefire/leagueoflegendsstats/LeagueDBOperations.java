@@ -1,9 +1,15 @@
 package com.pulsefire.leagueoflegendsstats;
 
 import Mongo.MongoConnection;
-import java.util.List;
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import static java.util.Arrays.asList;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.aggregation.AggregationPipeline;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
@@ -47,12 +53,24 @@ public class LeagueDBOperations {
         return count;
     }
 
-    public JSONObject getLeagueName() {
-        JSONObject LeagueName = new JSONObject();
-        //League aa=new League("hello");
-        //Unusable constructor error..Will fix it tomorrow
-        
-        List<League> q=ds.find(League.class).retrievedFields(true, "name").asList();
-        return LeagueName;
+    public JSONArray getLeagueName() {
+        JSONArray names = new JSONArray();
+        DBCollection m = ds.getCollection(League.class);
+        BasicDBObject groupquery = new BasicDBObject();
+        groupquery.append("_id", new BasicDBObject("logoUrl", "$logoUrl").append("name", "$name"));
+        BasicDBObject query = new BasicDBObject();
+        query.append("$group", groupquery);
+
+        BasicDBObject project = new BasicDBObject("$project", new BasicDBObject("logoUrl", "$_id.logoUrl").append("name", "$_id.name"));
+        BasicDBObject sort = new BasicDBObject("$sort", new BasicDBObject("name", 1));
+        AggregationOutput out = m.aggregate(asList(query, project, sort));
+        Iterable<DBObject> result = out.results();
+        for (DBObject obj : result) {
+            JSONObject temp = new JSONObject();
+            temp.put("leagueName", obj.get("name").toString());
+            temp.put("logoUrl", obj.get("logoUrl").toString());
+            names.put(temp);
+        }
+        return names;
     }
 }

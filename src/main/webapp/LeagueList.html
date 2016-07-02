@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+        <style>
+            .logo { height: 176px; width: 144px; overflow: hidden; }
+        </style>
+        <script>
+            function pushdata(LeagueName, logoUrl)
+            {
+                return '<div class="col-sm-4"> <div class="card card-block"><img class="card-img-top center-block logo" src="' + logoUrl + '" alt="' + LeagueName + '"><div class="card-block"><p class="card-text text-center">' + LeagueName + '</p></div></div></div>';
+            }
+            $.getJSON("LeagueList",
+                    {},
+                    function (data) {
+                        debugger;
+                        var pushRowStart = "<div class='row'>";
+                        var pushRowEnd = "</div>";
+                        var pushmid="";
+                        //       debugger;
+                        //  document.getElementById('LeagueData').innerHTML = '<span class="glyphicon glyphicon-user"></span> ' + readCookie('shop');
+//                            $('#shopname').val(readCookie('shop'));
+                        //  pushContent = pushRowStart;
+                        count = data.length;
+                        for (i = 0; i < data.length; i++)
+                        {
+                            pushmid += pushdata(data[i].leagueName, data[i].logoUrl);
+                        }
+                        document.getElementById('LeagueData').innerHTML = pushRowStart + pushmid + pushRowEnd;
+                        //pushContent += pushRowEnd;
+                    }, "json");
+
+        </script>
+
+    </head>
+    <body style="background-color: black">
+        <div id="LeagueData"></div>
+    </body>
+</html>

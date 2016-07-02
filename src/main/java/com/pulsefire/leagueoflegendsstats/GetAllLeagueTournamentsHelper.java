@@ -54,7 +54,6 @@ public class GetAllLeagueTournamentsHelper {
         Date timestamp = null;
         dfm.setTimeZone(utc);
         try {
-
             timestamp = dfm.parse(time);
         } catch (ParseException e) {
 
